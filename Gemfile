@@ -8,6 +8,7 @@ gem 'rails', '3.1.0'
 # for Heroku deployment - as described in Ap. A of ELLS book
 group :development, :test do
   gem 'sqlite3'
+  gem 'rspec-rails'
   gem 'ruby-debug19', :require => 'ruby-debug'
   gem 'cucumber-rails'
   gem 'cucumber-rails-training-wheels'
@@ -22,7 +23,7 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'therubyracer'              
+  gem 'therubyracer' unless RUBY_PLATFORM =~ /mswin|mingw/            
   gem 'sass-rails', "  ~> 3.1.0"
   gem 'coffee-rails', "~> 3.1.0"
   gem 'uglifier'
