@@ -38,6 +38,7 @@ end
 
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   movies = movies_in_table().map { |m| m["title"] }
+  puts movies
   movies.index(e1).should < movies.index(e2)
 end
 
@@ -93,6 +94,7 @@ Then /movies should be sorted by "(.*)"/ do |col|
   last_value = movies.shift[field]
   movies.each do |movie|
     value = movie[field]
+    puts "last = #{last_value}, value = #{value}, movie = #{movie}"
     last_value.should < value
     last_value = value
   end
