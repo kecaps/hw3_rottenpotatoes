@@ -27,9 +27,11 @@ Scenario: sort movies alphabetically
   When I follow "Movie Title"
   Then I should see "Aladdin" before "Amelie"
   And movies should be sorted by "Movie Title"
+  And I should see all of the movies
 
 Scenario: sort movies in increasing order of release date
   When I follow "Release Date"
   Then I should see "When Harry Met Sally" before "Amelie"
   And movies should be sorted by "Release Date"
+  And I should see all of the movies
 
