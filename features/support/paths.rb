@@ -24,7 +24,7 @@ module NavigationHelpers
     when /^the details page for "(.*)"$/i
       movie_path(Movie.find_by_title($1))
     
-    when /the Similar Movies page for "(.*)"$/i
+    when /the similar movies page for "(.*)"$/i
       similar_to_movie_path(Movie.find_by_title($1))
         
     # Add more mappings here.
