@@ -58,4 +58,17 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
+  def similar_to
+    @movie = nil
+    begin
+      @movie = Movie.find(params[:id])
+      @similar_movies = @movie.similar_movies
+    rescue ActiveRecord::RecordNotFound
+      flash[:warning] = "Movie not found."
+      redirect_to movies_path
+    rescue Movie::NoSimilarMovies => e
+      flash[:warning] = "'#{@movie.title}' has #{e.message}."
+      redirect_to movies_path
+    end
+  end
 end
