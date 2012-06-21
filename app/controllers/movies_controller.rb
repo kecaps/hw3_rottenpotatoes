@@ -59,7 +59,6 @@ class MoviesController < ApplicationController
   end
 
   def similar_to
-    @movie = nil
     begin
       @movie = Movie.find(params[:id])
       @similar_movies = @movie.similar_movies
