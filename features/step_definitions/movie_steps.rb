@@ -2,6 +2,13 @@
 
 
 class Hash
+  def replace_nil_values!(replacement)
+    each do |k,v|
+      if v.nil?
+        self[k] = replacement
+      end
+    end
+  end
   def replace_values!(*keys)
     keys.each do |k|
       if has_key?(k) then
@@ -15,13 +22,14 @@ end
 module MovieHelpers
   COLUMN_NAME_TO_FIELD_NAMES = { "Movie Title" => "title",
                                  "Rating" => "rating",
+                                 "Director" => "director",
                                  "Release Date" => "release_date" }
   def movies_in_table
     rows = find("table#movies").all("tr")
-    field_names = rows.shift.all('th').first(3).map { |c| COLUMN_NAME_TO_FIELD_NAMES[c.text.strip] }
+    field_names = rows.shift.all('th').map { |c| COLUMN_NAME_TO_FIELD_NAMES[c.text.strip] }
     return rows.map do |r| 
       tds = r.all('td').map { |c| c.text.strip }
-      movie = Hash[field_names.map { |f| [f, tds.shift] }].replace_values!("release_date") { |d| d.to_date }
+      Hash[field_names.map { |f| d = tds.shift; f.nil? ? [] : [f, d] }].replace_values!("release_date") { |d| d.to_date }
     end
   end
 end
@@ -59,7 +67,8 @@ Then /the following ratings should be (un)?checked: (.*)/ do |uncheck, rating_li
 end
 
 Then /I should see the following movies:/ do |expected_movies|
-  movies = movies_in_table()
+  movies = movies_in_table().map { |h| h.slice(*expected_movies.headers) }
+
   expected_movies.hashes.each do |movie|
     movie.replace_values!("release_date") { |d| d.to_date }
     movies.should include(movie) 
@@ -67,7 +76,7 @@ Then /I should see the following movies:/ do |expected_movies|
 end
 
 Then /I should not see the following movies:/ do |expected_movies|
-  movies = movies_in_table()
+  movies = movies_in_table().map { |h| h.slice(*expected_movies.headers) }
   expected_movies.hashes.each do |movie|
     movie.replace_values!("release_date") { |d| d.to_date }
     movies.should_not include(movie) 
@@ -79,7 +88,7 @@ Then /I should see all of the movies/ do
   movies = movies_in_table()
   all_movies.size.should  == movies.size
   all_movies.each do |movie|
-    movies.should include(Hash[MovieHelpers::COLUMN_NAME_TO_FIELD_NAMES.values.map { |k| [ k, movie[k]]}].replace_values!("release_date") { |d| d.to_date}) 
+    movies.should include(Hash[MovieHelpers::COLUMN_NAME_TO_FIELD_NAMES.values.map { |k| [ k, movie[k]]}].replace_values!("release_date") { |d| d.to_date}.replace_nil_values!("")) 
   end
 end  
 
