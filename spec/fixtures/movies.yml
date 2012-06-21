@@ -1,0 +1,29 @@
+star_wars:
+  title: Star Wars
+  rating: PG
+  director: George Lucas
+  release_date: 1977-05-25
+
+blade_runner:
+  title: Blade Runner
+  rating: PG
+  director: Ridley Scott
+  release_date: 1982-06-25
+  
+alien:
+  title: Alien
+  rating: R
+  release_date: 1979-05-25
+  
+thx_1138:
+  title: THX-1138
+  rating: R
+  director: George Lucas
+  release_date: 1971-03-11
+  
+american_grafitti:
+  title: American Grafitti
+  rating: PG
+  director: George Lucas
+  release_date: 1973-08-11
+ 
