@@ -36,3 +36,24 @@ Scenario: create new movie
   | title        | rating | director     | release_date |
   | Toy Story 3  | G      | John Lasseter|   2010-06-18 |
   
+Scenario: destroy movie
+  Given I am on the RottenPotatoes home page
+  When  I check the following ratings: PG
+  And   I uncheck the following ratings: G, PG-13, R, NC-17
+  And   I press "Refresh"
+  Then  I should see the following movies:
+  | title        | rating | director     | release_date |
+  | Star Wars    | PG     | George Lucas |   1977-05-25 |
+  | Blade Runner | PG     | Ridley Scott |   1982-06-25 |
+  When  I follow "More about Star Wars"
+  Then  I should be on the details page for "Star Wars"
+  When  I press "Delete"
+  Then  I should be on the RottenPotatoes home page
+  And   I should see "Movie 'Star Wars' deleted."
+  And   I should see the following movies:
+  | title        | rating | director     | release_date |
+  | Blade Runner | PG     | Ridley Scott |   1982-06-25 |
+  But   I should not see the following movies:
+  | title        | rating | director     | release_date |
+  | Star Wars    | PG     | George Lucas |   1977-05-25 |
+  
