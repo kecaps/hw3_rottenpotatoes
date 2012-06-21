@@ -23,16 +23,16 @@ Scenario: create new movie
   When  I follow "Add new movie"
   Then  I should be on the new movie page
   When  I fill in the following:
-    |Title    | Toy Story     |
+    |Title    | Toy Story 3   |
     |Director | John Lasseter |
   And   I select "G" from "Rating"
-  And   I select "1995" from "movie_release_date_1i"
-  And   I select "November" from "movie_release_date_2i"
-  And   I select "22" from "movie_release_date_3i"
+  And   I select "2010" from "movie_release_date_1i"
+  And   I select "June" from "movie_release_date_2i"
+  And   I select "18" from "movie_release_date_3i"
   And   I press "Save Changes"
   Then  I should be on the RottenPotatoes home page
-  And   I should see "Toy Story was successfully created"
+  And   I should see "Toy Story 3 was successfully created"
   And   I should see the following movies:
   | title        | rating | director     | release_date |
-  | Toy Story    | G      | John Lasseter|   1995-11-22 |
+  | Toy Story 3  | G      | John Lasseter|   2010-06-18 |
   
